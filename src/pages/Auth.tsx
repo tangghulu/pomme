@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Leaf, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
+import { cn } from "@/lib/utils";
+import { ScaleIn } from "@/components/motion";
+import { toast } from "@/hooks/use-toast";
+import pommeIcon from "@/assets/pomme-icon.png";
 import { cn } from "@/lib/utils";
 import { ScaleIn } from "@/components/motion";
 import { toast } from "@/hooks/use-toast";
