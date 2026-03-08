@@ -32,9 +32,7 @@ const Settings = () => {
         {/* Notifications */}
         <Section title="Notifications">
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
-            <ToggleRow icon={<Bell className="w-4 h-4" />} label="Reminders" value={reminders} onChange={setReminders} />
-            <ToggleRow icon={<BellOff className="w-4 h-4" />} label="Reminder sound" value={reminderSound} onChange={setReminderSound} border />
-            <ToggleRow icon={<Moon className="w-4 h-4" />} label="Quiet hours" value={quietHours} onChange={setQuietHours} last />
+            <ToggleRow icon={<Bell className="w-4 h-4" />} label="Reminders" value={reminders} onChange={setReminders} last />
           </div>
         </Section>
 
