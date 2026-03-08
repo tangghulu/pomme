@@ -27,6 +27,7 @@ const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const today = 2; // Wednesday (0-indexed)
 
 const Index = () => {
+  const navigate = useNavigate();
   const [chores, setChores] = useState<Chore[]>(initialChores);
 
   const markDone = (id: number) => {
