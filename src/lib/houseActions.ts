@@ -88,3 +88,40 @@ export async function updateProfile(userId: string, updates: { username?: string
     .eq("id", userId);
   if (error) throw error;
 }
+
+export async function updateHouseName(houseId: string, name: string) {
+  const { error } = await supabase
+    .from("houses")
+    .update({ name })
+    .eq("id", houseId);
+  if (error) throw error;
+}
+
+export async function leaveHouse(houseId: string, userId: string) {
+  const { error } = await supabase
+    .from("house_members")
+    .delete()
+    .eq("house_id", houseId)
+    .eq("user_id", userId);
+  if (error) throw error;
+}
+
+export async function updateChore(choreId: string, updates: Partial<{
+  name: string; icon: string; frequency: string; days: string[];
+  reminder_time: string; people_needed: number; auto_rotate: boolean; archived: boolean;
+}>) {
+  const { error } = await supabase
+    .from("chores")
+    .update(updates)
+    .eq("id", choreId);
+  if (error) throw error;
+}
+
+export async function deleteAccount(userId: string) {
+  // Leave any houses first
+  await supabase.from("house_members").delete().eq("user_id", userId);
+  // Delete profile
+  await supabase.from("profiles").delete().eq("id", userId);
+  // Sign out (actual user deletion requires admin, so we just clean up and sign out)
+  await supabase.auth.signOut();
+}
