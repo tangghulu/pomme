@@ -24,6 +24,7 @@ const App = () => (
           <Route path="/create" element={<CreateChore />} />
           <Route path="/chores" element={<Chores />} />
           <Route path="/roomies" element={<Roomies />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/onboarding" element={<Onboarding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
