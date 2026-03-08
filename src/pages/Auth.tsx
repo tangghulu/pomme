@@ -70,7 +70,7 @@ const Auth = () => {
             </div>
           </ScaleIn>
 
-          <h1 className="text-3xl font-extrabold tracking-tight mb-2">Chore Harmony</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight mb-2">Pomme</h1>
           <p className="text-sm text-muted-foreground mb-8">
             {mode === "login" ? "Welcome back!" : "Create your account"}
           </p>

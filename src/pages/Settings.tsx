@@ -67,7 +67,7 @@ const Settings = () => {
               <div className="rounded-2xl border border-border bg-card overflow-hidden">
                 <NavRow icon={<Palette className="w-4 h-4" />} label="Appearance" subtitle="System default" />
                 <NavRow icon={<HelpCircle className="w-4 h-4" />} label="Help & support" />
-                <NavRow icon={<Info className="w-4 h-4" />} label="About Chore Harmony" subtitle="v1.0.0" last />
+                <NavRow icon={<Info className="w-4 h-4" />} label="About Pomme" subtitle="v1.0.0" last />
               </div>
             </Section>
           </StaggerItem>
