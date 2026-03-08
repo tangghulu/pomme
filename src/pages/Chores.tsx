@@ -5,39 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "@/components/BottomNav";
 import { PageTransition, StaggerContainer, StaggerItem, FadeIn } from "@/components/motion";
 import { cn } from "@/lib/utils";
+import { useChores } from "@/hooks/useHouse";
 
-interface ManagedChore {
-  id: number;
-  name: string;
-  icon: string;
-  frequency: string;
-  frequencyLabel: string;
-  assignedCount: number;
-  nextDue: string;
-  reminderTime: string;
-  archived: boolean;
-}
-
-const allChores: ManagedChore[] = [
-  { id: 1, name: "Take out garbage", icon: "🗑️", frequency: "weekly", frequencyLabel: "Every week", assignedCount: 1, nextDue: "Monday", reminderTime: "8:00 AM", archived: false },
-  { id: 2, name: "Clean bathroom", icon: "🚿", frequency: "weekly", frequencyLabel: "Every week", assignedCount: 1, nextDue: "Tuesday", reminderTime: "9:00 AM", archived: false },
-  { id: 3, name: "Kitchen cleanup", icon: "🍳", frequency: "weekly", frequencyLabel: "Every week", assignedCount: 2, nextDue: "Wednesday", reminderTime: "7:00 PM", archived: false },
-  { id: 4, name: "Vacuum living room", icon: "🧹", frequency: "biweekly", frequencyLabel: "Every other week", assignedCount: 1, nextDue: "Thursday", reminderTime: "10:00 AM", archived: false },
-  { id: 5, name: "Mop floors", icon: "🫧", frequency: "monthly", frequencyLabel: "Once a month", assignedCount: 2, nextDue: "Friday", reminderTime: "9:00 AM", archived: false },
-  { id: 6, name: "Wipe counters", icon: "✨", frequency: "weekly", frequencyLabel: "Every week", assignedCount: 1, nextDue: "Saturday", reminderTime: "12:00 PM", archived: false },
-  { id: 7, name: "Clean fridge", icon: "🧊", frequency: "monthly", frequencyLabel: "Once a month", assignedCount: 1, nextDue: "Mar 15", reminderTime: "10:00 AM", archived: true },
-];
+const frequencyLabels: Record<string, string> = {
+  weekly: "Every week",
+  biweekly: "Every other week",
+  monthly: "Once a month",
+};
 
 const Chores = () => {
   const navigate = useNavigate();
+  const { data: allChores = [] } = useChores();
   const [filter, setFilter] = useState<"active" | "archived">("active");
   const [search, setSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [selectedChore, setSelectedChore] = useState<ManagedChore | null>(null);
+  const [selectedChore, setSelectedChore] = useState<any>(null);
 
   const filtered = allChores
-    .filter((c) => (filter === "active" ? !c.archived : c.archived))
-    .filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
+    .filter((c: any) => (filter === "active" ? !c.archived : c.archived))
+    .filter((c: any) => c.name.toLowerCase().includes(search.toLowerCase()));
+
+  const activeCount = allChores.filter((c: any) => !c.archived).length;
+  const archivedCount = allChores.filter((c: any) => c.archived).length;
 
   return (
     <PageTransition className="min-h-screen bg-background pb-24">
@@ -46,16 +35,10 @@ const Chores = () => {
           <div className="flex items-center justify-between mb-5">
             <h1 className="text-2xl font-extrabold tracking-tight">Chores</h1>
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center hover:bg-accent transition-colors"
-              >
+              <button onClick={() => setSearchOpen(!searchOpen)} className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center hover:bg-accent transition-colors">
                 <Search className="w-5 h-5 text-foreground" />
               </button>
-              <button
-                onClick={() => navigate("/create")}
-                className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-md hover:scale-105 transition-transform"
-              >
+              <button onClick={() => navigate("/create")} className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-md hover:scale-105 transition-transform">
                 <Plus className="w-5 h-5 text-primary-foreground" />
               </button>
             </div>
@@ -64,21 +47,8 @@ const Chores = () => {
 
         <AnimatePresence>
           {searchOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden mb-4"
-            >
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search chores..."
-                autoFocus
-                className="w-full px-4 py-3 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground/60 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-              />
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden mb-4">
+              <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search chores..." autoFocus className="w-full px-4 py-3 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground/60 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -86,48 +56,28 @@ const Chores = () => {
         <FadeIn delay={0.05}>
           <div className="flex gap-2 mb-5">
             {(["active", "archived"] as const).map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={cn(
-                  "px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all duration-200",
-                  filter === f
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-muted/60 text-muted-foreground hover:bg-accent"
-                )}
-              >
-                {f} ({allChores.filter((c) => (f === "active" ? !c.archived : c.archived)).length})
+              <button key={f} onClick={() => setFilter(f)} className={cn("px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all duration-200", filter === f ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted/60 text-muted-foreground hover:bg-accent")}>
+                {f} ({f === "active" ? activeCount : archivedCount})
               </button>
             ))}
           </div>
         </FadeIn>
 
         <StaggerContainer className="flex flex-col gap-3">
-          {filtered.map((chore) => (
+          {filtered.map((chore: any) => (
             <StaggerItem key={chore.id}>
-              <button
-                onClick={() => setSelectedChore(chore)}
-                className="w-full rounded-2xl border border-border bg-card p-4 text-left hover:bg-accent/30 transition-colors"
-              >
+              <button onClick={() => setSelectedChore(chore)} className="w-full rounded-2xl border border-border bg-card p-4 text-left hover:bg-accent/30 transition-colors">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl flex-shrink-0">{chore.icon}</span>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-sm truncate">{chore.name}</h3>
                     <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Clock className="w-3 h-3" />{chore.frequencyLabel}
-                      </span>
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Users className="w-3 h-3" />{chore.assignedCount}
-                      </span>
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground"><Clock className="w-3 h-3" />{frequencyLabels[chore.frequency] || chore.frequency}</span>
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground"><Users className="w-3 h-3" />{chore.people_needed}</span>
                     </div>
                     <div className="flex items-center gap-3 mt-1 flex-wrap">
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <CalendarDays className="w-3 h-3" />Next: {chore.nextDue}
-                      </span>
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Bell className="w-3 h-3" />{chore.reminderTime}
-                      </span>
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground"><CalendarDays className="w-3 h-3" />{(chore.days || []).join(", ") || "—"}</span>
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground"><Bell className="w-3 h-3" />{chore.reminder_time}</span>
                     </div>
                   </div>
                   <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
@@ -138,9 +88,7 @@ const Chores = () => {
           {filtered.length === 0 && (
             <StaggerItem>
               <div className="text-center py-12">
-                <p className="text-sm text-muted-foreground">
-                  {search ? "No chores match your search" : "No chores here yet"}
-                </p>
+                <p className="text-sm text-muted-foreground">{search ? "No chores match your search" : "No chores here yet"}</p>
               </div>
             </StaggerItem>
           )}
@@ -148,9 +96,7 @@ const Chores = () => {
       </div>
 
       <AnimatePresence>
-        {selectedChore && (
-          <ChoreDetailSheet chore={selectedChore} onClose={() => setSelectedChore(null)} />
-        )}
+        {selectedChore && <ChoreDetailSheet chore={selectedChore} onClose={() => setSelectedChore(null)} />}
       </AnimatePresence>
 
       <BottomNav />
@@ -158,31 +104,19 @@ const Chores = () => {
   );
 };
 
-function ChoreDetailSheet({ chore, onClose }: { chore: ManagedChore; onClose: () => void }) {
+function ChoreDetailSheet({ chore, onClose }: { chore: any; onClose: () => void }) {
   const rows = [
-    { label: "Frequency", value: chore.frequencyLabel, icon: "🔁" },
-    { label: "People", value: `${chore.assignedCount} roommate${chore.assignedCount > 1 ? "s" : ""}`, icon: "👥" },
-    { label: "Next due", value: chore.nextDue, icon: "📆" },
-    { label: "Reminder", value: chore.reminderTime, icon: "⏰" },
+    { label: "Frequency", value: frequencyLabels[chore.frequency] || chore.frequency, icon: "🔁" },
+    { label: "People", value: `${chore.people_needed} roommate${chore.people_needed > 1 ? "s" : ""}`, icon: "👥" },
+    { label: "Days", value: (chore.days || []).join(", ") || "—", icon: "📆" },
+    { label: "Reminder", value: chore.reminder_time, icon: "⏰" },
+    { label: "Auto-rotate", value: chore.auto_rotate ? "On" : "Off", icon: "🔄" },
   ];
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-center">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
-        className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <motion.div
-        initial={{ y: "100%" }}
-        animate={{ y: 0 }}
-        exit={{ y: "100%" }}
-        transition={{ type: "spring", damping: 28, stiffness: 300 }}
-        className="relative w-full max-w-md bg-card rounded-t-3xl p-5 pb-10"
-      >
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="absolute inset-0 bg-foreground/20 backdrop-blur-sm" onClick={onClose} />
+      <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }} transition={{ type: "spring", damping: 28, stiffness: 300 }} className="relative w-full max-w-md bg-card rounded-t-3xl p-5 pb-10">
         <div className="w-10 h-1 bg-muted rounded-full mx-auto mb-4" />
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">

@@ -14,13 +14,217 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chore_assignments: {
+        Row: {
+          chore_id: string
+          completed_at: string | null
+          created_at: string
+          due_date: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          chore_id: string
+          completed_at?: string | null
+          created_at?: string
+          due_date: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          chore_id?: string
+          completed_at?: string | null
+          created_at?: string
+          due_date?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chore_assignments_chore_id_fkey"
+            columns: ["chore_id"]
+            isOneToOne: false
+            referencedRelation: "chores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chores: {
+        Row: {
+          archived: boolean
+          auto_rotate: boolean
+          created_at: string
+          created_by: string | null
+          days: string[]
+          frequency: string
+          house_id: string
+          icon: string
+          id: string
+          name: string
+          people_needed: number
+          reminder_time: string
+        }
+        Insert: {
+          archived?: boolean
+          auto_rotate?: boolean
+          created_at?: string
+          created_by?: string | null
+          days?: string[]
+          frequency?: string
+          house_id: string
+          icon?: string
+          id?: string
+          name: string
+          people_needed?: number
+          reminder_time?: string
+        }
+        Update: {
+          archived?: boolean
+          auto_rotate?: boolean
+          created_at?: string
+          created_by?: string | null
+          days?: string[]
+          frequency?: string
+          house_id?: string
+          icon?: string
+          id?: string
+          name?: string
+          people_needed?: number
+          reminder_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chores_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      house_members: {
+        Row: {
+          house_id: string
+          id: string
+          joined_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          house_id: string
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          house_id?: string
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "house_members_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      houses: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      invite_codes: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          house_id: string
+          id: string
+          is_active: boolean
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          house_id: string
+          id?: string
+          is_active?: boolean
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          house_id?: string
+          id?: string
+          is_active?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invite_codes_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_color: string
+          created_at: string
+          id: string
+          username: string
+        }
+        Insert: {
+          avatar_color?: string
+          created_at?: string
+          id: string
+          username: string
+        }
+        Update: {
+          avatar_color?: string
+          created_at?: string
+          id?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_invite_code: { Args: never; Returns: string }
+      get_user_house_id: { Args: { _user_id: string }; Returns: string }
+      is_house_member: {
+        Args: { _house_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
