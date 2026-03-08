@@ -54,11 +54,21 @@ export function useHouseMembers() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("house_members")
-        .select("*, profiles(*)")
+        .select("*")
         .eq("house_id", house!.id);
       if (error) throw error;
+
+      const userIds = (data || []).map((m: any) => m.user_id);
+      const { data: profiles } = userIds.length
+        ? await supabase.from("profiles").select("*").in("id", userIds)
+        : { data: [] };
+      const profileMap = Object.fromEntries(
+        (profiles || []).map((p: any) => [p.id, p])
+      );
+
       return (data || []).map((m: any) => ({
         ...m,
+        profiles: profileMap[m.user_id] || null,
         isYou: m.user_id === user?.id,
       }));
     },
