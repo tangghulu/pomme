@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Leaf, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { cn } from "@/lib/utils";
 import { ScaleIn } from "@/components/motion";
 import { toast } from "@/hooks/use-toast";
+import pommeIcon from "@/assets/pomme-icon.png";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -65,9 +66,7 @@ const Auth = () => {
       <div className="max-w-md mx-auto w-full flex flex-col flex-1 px-5 pt-12 pb-8">
         <div className="flex-1 flex flex-col items-center">
           <ScaleIn>
-            <div className="w-20 h-20 rounded-3xl bg-celery/30 flex items-center justify-center mb-6">
-              <Leaf className="w-10 h-10 text-primary" />
-            </div>
+            <img src={pommeIcon} alt="Pomme" className="w-20 h-20 rounded-3xl shadow-sm mb-6" />
           </ScaleIn>
 
           <h1 className="text-3xl font-extrabold tracking-tight mb-2">Pomme</h1>
