@@ -63,7 +63,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="min-h-screen bg-background flex flex-col">
       <div className="max-w-md mx-auto w-full flex flex-col flex-1 px-5 pt-6 pb-8">
         {/* Progress (hidden on welcome & success) */}
         {currentStep !== "welcome" && currentStep !== "success" && (
