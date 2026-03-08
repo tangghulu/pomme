@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import CreateChore from "./pages/CreateChore";
 import Chores from "./pages/Chores";
+import Roomies from "./pages/Roomies";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
