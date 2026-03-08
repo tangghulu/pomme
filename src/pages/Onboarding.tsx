@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Leaf, Copy, Check, Home, Users, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ScaleIn } from "@/components/motion";
 
 const AVATAR_COLORS = [
   { name: "Sage", bg: "bg-sage", hsl: "hsl(110, 20%, 70%)" },
@@ -61,7 +63,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="min-h-screen bg-background flex flex-col">
       <div className="max-w-md mx-auto w-full flex flex-col flex-1 px-5 pt-6 pb-8">
         {/* Progress (hidden on welcome & success) */}
         {currentStep !== "welcome" && currentStep !== "success" && (
@@ -87,44 +89,30 @@ const Onboarding = () => {
           </>
         )}
 
-        {/* Step content */}
         <div className="flex-1 flex flex-col">
-          {currentStep === "welcome" && (
-            <WelcomeStep onContinue={next} />
-          )}
-          {currentStep === "profile" && (
-            <ProfileStep
-              username={username}
-              setUsername={setUsername}
-              avatarColor={avatarColor}
-              setAvatarColor={setAvatarColor}
-            />
-          )}
-          {currentStep === "houseChoice" && (
-            <HouseChoiceStep choice={houseChoice} setChoice={setHouseChoice} />
-          )}
-          {currentStep === "createHouse" && (
-            <CreateHouseStep
-              houseName={houseName}
-              setHouseName={setHouseName}
-              roommateCount={roommateCount}
-              setRoommateCount={setRoommateCount}
-              generatedCode={generatedCode}
-              codeCopied={codeCopied}
-              onCopyCode={copyCode}
-            />
-          )}
-          {currentStep === "joinHouse" && (
-            <JoinHouseStep inviteCode={inviteCode} setInviteCode={setInviteCode} />
-          )}
-          {currentStep === "success" && (
-            <SuccessStep
-              houseChoice={houseChoice!}
-              houseName={houseChoice === "create" ? houseName : "Maple House"}
-              username={username}
-              avatarColor={avatarColor}
-            />
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+              className="flex-1 flex flex-col"
+            >
+              {currentStep === "welcome" && <WelcomeStep onContinue={next} />}
+              {currentStep === "profile" && (
+                <ProfileStep username={username} setUsername={setUsername} avatarColor={avatarColor} setAvatarColor={setAvatarColor} />
+              )}
+              {currentStep === "houseChoice" && <HouseChoiceStep choice={houseChoice} setChoice={setHouseChoice} />}
+              {currentStep === "createHouse" && (
+                <CreateHouseStep houseName={houseName} setHouseName={setHouseName} roommateCount={roommateCount} setRoommateCount={setRoommateCount} generatedCode={generatedCode} codeCopied={codeCopied} onCopyCode={copyCode} />
+              )}
+              {currentStep === "joinHouse" && <JoinHouseStep inviteCode={inviteCode} setInviteCode={setInviteCode} />}
+              {currentStep === "success" && (
+                <SuccessStep houseChoice={houseChoice!} houseName={houseChoice === "create" ? houseName : "Maple House"} username={username} avatarColor={avatarColor} />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Bottom button (hidden on welcome) */}
@@ -154,7 +142,7 @@ const Onboarding = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -162,9 +150,11 @@ const Onboarding = () => {
 function WelcomeStep({ onContinue }: { onContinue: () => void }) {
   return (
     <div className="flex-1 flex flex-col items-center justify-center text-center px-2">
-      <div className="w-20 h-20 rounded-3xl bg-celery/30 flex items-center justify-center mb-6">
-        <Leaf className="w-10 h-10 text-primary" />
-      </div>
+      <ScaleIn>
+        <div className="w-20 h-20 rounded-3xl bg-celery/30 flex items-center justify-center mb-6">
+          <Leaf className="w-10 h-10 text-primary" />
+        </div>
+      </ScaleIn>
       <h1 className="text-3xl font-extrabold tracking-tight mb-3">
         Chore Harmony
       </h1>
