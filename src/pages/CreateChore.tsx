@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ScrollTimePicker from "@/components/ScrollTimePicker";
 import { ArrowLeft, ArrowRight, Check, Clock, Users, RefreshCw, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,10 +22,6 @@ const frequencies = [
   { value: "monthly", label: "Once a month", emoji: "🗓️" },
 ];
 
-const timeSlots = [
-  "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
-  "12:00 PM", "2:00 PM", "5:00 PM", "7:00 PM", "9:00 PM",
-];
 
 const CreateChore = () => {
   const navigate = useNavigate();
@@ -284,22 +281,7 @@ function StepFrequencyAndTime({
         <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5" /> Reminder time
         </label>
-        <div className="flex flex-wrap gap-2">
-          {timeSlots.map((t) => (
-            <button
-              key={t}
-              onClick={() => setReminderTime(t)}
-              className={cn(
-                "px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200",
-                reminderTime === t
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-muted/60 text-muted-foreground hover:bg-accent"
-              )}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+        <ScrollTimePicker value={reminderTime} onChange={setReminderTime} />
       </div>
     </div>
   );
