@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import CreateChore from "./pages/CreateChore";
 import Chores from "./pages/Chores";
 import Roomies from "./pages/Roomies";
+import Settings from "./pages/Settings";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/create" element={<CreateChore />} />
           <Route path="/chores" element={<Chores />} />
           <Route path="/roomies" element={<Roomies />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/onboarding" element={<Onboarding />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
