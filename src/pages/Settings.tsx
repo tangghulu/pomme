@@ -3,9 +3,21 @@ import { User, Mail, Bell, Home, Share2, LogOut, HelpCircle, Info, Trash2, Chevr
 import BottomNav from "@/components/BottomNav";
 import { PageTransition, StaggerContainer, StaggerItem } from "@/components/motion";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { useProfile, useHouse } from "@/hooks/useHouse";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
+  const { user, signOut } = useAuth();
+  const { data: profile } = useProfile();
+  const { data: house } = useHouse();
+  const navigate = useNavigate();
   const [reminders, setReminders] = useState(true);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/auth");
+  };
 
   return (
     <PageTransition className="min-h-screen bg-background pb-24">
@@ -19,10 +31,12 @@ const Settings = () => {
             <Section title="Account">
               <div className="rounded-2xl border border-border bg-card overflow-hidden">
                 <div className="flex items-center gap-3 px-4 py-4 border-b border-border">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-extrabold text-foreground/80 flex-shrink-0" style={{ backgroundColor: "hsl(110, 20%, 70%)" }}>AL</div>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-extrabold text-foreground/80 flex-shrink-0" style={{ backgroundColor: profile?.avatar_color || "hsl(110, 20%, 70%)" }}>
+                    {(profile?.username || "?").slice(0, 2).toUpperCase()}
+                  </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-bold text-sm">@alex_m</p>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5"><Mail className="w-3 h-3" /> Connected with Google</p>
+                    <p className="font-bold text-sm">@{profile?.username || "user"}</p>
+                    <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5"><Mail className="w-3 h-3" /> {user?.email}</p>
                   </div>
                 </div>
                 <NavRow icon={<User className="w-4 h-4" />} label="Edit profile" />
@@ -41,7 +55,7 @@ const Settings = () => {
           <StaggerItem>
             <Section title="House">
               <div className="rounded-2xl border border-border bg-card overflow-hidden">
-                <NavRow icon={<Home className="w-4 h-4" />} label="Maple House" subtitle="Rename house" />
+                <NavRow icon={<Home className="w-4 h-4" />} label={house?.name || "My House"} subtitle="Rename house" />
                 <NavRow icon={<Share2 className="w-4 h-4" />} label="Invite settings" />
                 <NavRow icon={<LogOut className="w-4 h-4" />} label="Leave house" last />
               </div>
@@ -61,7 +75,7 @@ const Settings = () => {
           <StaggerItem>
             <Section title="">
               <div className="rounded-2xl border border-border bg-card overflow-hidden">
-                <NavRow icon={<LogOut className="w-4 h-4" />} label="Log out" destructive />
+                <NavRow icon={<LogOut className="w-4 h-4" />} label="Log out" destructive onClick={handleLogout} />
                 <NavRow icon={<Trash2 className="w-4 h-4" />} label="Delete account" destructive last />
               </div>
             </Section>
@@ -82,9 +96,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function NavRow({ icon, label, subtitle, destructive, last }: { icon: React.ReactNode; label: string; subtitle?: string; destructive?: boolean; last?: boolean }) {
+function NavRow({ icon, label, subtitle, destructive, last, onClick }: { icon: React.ReactNode; label: string; subtitle?: string; destructive?: boolean; last?: boolean; onClick?: () => void }) {
   return (
-    <button className={cn("w-full flex items-center justify-between px-4 py-3.5 hover:bg-accent/30 transition-colors text-left", !last && "border-b border-border", destructive && "text-destructive")}>
+    <button onClick={onClick} className={cn("w-full flex items-center justify-between px-4 py-3.5 hover:bg-accent/30 transition-colors text-left", !last && "border-b border-border", destructive && "text-destructive")}>
       <div className="flex items-center gap-3">
         {icon}
         <div>
@@ -97,17 +111,14 @@ function NavRow({ icon, label, subtitle, destructive, last }: { icon: React.Reac
   );
 }
 
-function ToggleRow({ icon, label, value, onChange, last }: { icon: React.ReactNode; label: string; value: boolean; onChange: (v: boolean) => void; border?: boolean; last?: boolean }) {
+function ToggleRow({ icon, label, value, onChange, last }: { icon: React.ReactNode; label: string; value: boolean; onChange: (v: boolean) => void; last?: boolean }) {
   return (
     <div className={cn("flex items-center justify-between px-4 py-3.5", !last && "border-b border-border")}>
       <div className="flex items-center gap-3">
         {icon}
         <span className="text-sm font-semibold">{label}</span>
       </div>
-      <button
-        onClick={() => onChange(!value)}
-        className={cn("w-12 h-7 rounded-full flex items-center px-0.5 transition-colors duration-300", value ? "bg-primary" : "bg-muted")}
-      >
+      <button onClick={() => onChange(!value)} className={cn("w-12 h-7 rounded-full flex items-center px-0.5 transition-colors duration-300", value ? "bg-primary" : "bg-muted")}>
         <div className={cn("w-6 h-6 bg-card rounded-full shadow-sm transition-transform duration-300", value ? "translate-x-5" : "translate-x-0")} />
       </button>
     </div>
