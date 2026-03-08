@@ -5,8 +5,6 @@ import { cn } from "@/lib/utils";
 
 const Settings = () => {
   const [reminders, setReminders] = useState(true);
-  const [reminderSound, setReminderSound] = useState(true);
-  const [quietHours, setQuietHours] = useState(false);
 
   return (
     <div className="min-h-screen bg-background pb-24">
