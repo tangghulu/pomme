@@ -219,12 +219,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_house_with_admin: { Args: { _name: string }; Returns: Json }
       generate_invite_code: { Args: never; Returns: string }
       get_user_house_id: { Args: { _user_id: string }; Returns: string }
       is_house_member: {
         Args: { _house_id: string; _user_id: string }
         Returns: boolean
       }
+      join_house_by_code: { Args: { _code: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
