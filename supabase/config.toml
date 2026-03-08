@@ -1,1 +1,4 @@
 project_id = "xmjlhzrwwuzpghnlelob"
+
+[functions.rotate-chores]
+verify_jwt = false
