@@ -8,9 +8,6 @@ import { cn } from "@/lib/utils";
 import { ScaleIn } from "@/components/motion";
 import { toast } from "@/hooks/use-toast";
 import pommeIcon from "@/assets/pomme-icon.png";
-import { cn } from "@/lib/utils";
-import { ScaleIn } from "@/components/motion";
-import { toast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const navigate = useNavigate();
