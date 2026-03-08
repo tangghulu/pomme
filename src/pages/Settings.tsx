@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Mail, Bell, BellOff, Moon, Home, Share2, LogOut, HelpCircle, Info, Trash2, ChevronRight, Palette } from "lucide-react";
+import { User, Mail, Bell, Moon, Home, Share2, LogOut, HelpCircle, Info, Trash2, ChevronRight, Palette } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import { cn } from "@/lib/utils";
 
