@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Leaf, Copy, Check, Home, Users, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ScaleIn } from "@/components/motion";
 
 const AVATAR_COLORS = [
   { name: "Sage", bg: "bg-sage", hsl: "hsl(110, 20%, 70%)" },
