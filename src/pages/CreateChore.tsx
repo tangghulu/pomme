@@ -22,10 +22,6 @@ const frequencies = [
   { value: "monthly", label: "Once a month", emoji: "🗓️" },
 ];
 
-const timeSlots = [
-  "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM",
-  "12:00 PM", "2:00 PM", "5:00 PM", "7:00 PM", "9:00 PM",
-];
 
 const CreateChore = () => {
   const navigate = useNavigate();
