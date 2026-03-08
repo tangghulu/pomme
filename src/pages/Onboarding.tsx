@@ -89,44 +89,30 @@ const Onboarding = () => {
           </>
         )}
 
-        {/* Step content */}
         <div className="flex-1 flex flex-col">
-          {currentStep === "welcome" && (
-            <WelcomeStep onContinue={next} />
-          )}
-          {currentStep === "profile" && (
-            <ProfileStep
-              username={username}
-              setUsername={setUsername}
-              avatarColor={avatarColor}
-              setAvatarColor={setAvatarColor}
-            />
-          )}
-          {currentStep === "houseChoice" && (
-            <HouseChoiceStep choice={houseChoice} setChoice={setHouseChoice} />
-          )}
-          {currentStep === "createHouse" && (
-            <CreateHouseStep
-              houseName={houseName}
-              setHouseName={setHouseName}
-              roommateCount={roommateCount}
-              setRoommateCount={setRoommateCount}
-              generatedCode={generatedCode}
-              codeCopied={codeCopied}
-              onCopyCode={copyCode}
-            />
-          )}
-          {currentStep === "joinHouse" && (
-            <JoinHouseStep inviteCode={inviteCode} setInviteCode={setInviteCode} />
-          )}
-          {currentStep === "success" && (
-            <SuccessStep
-              houseChoice={houseChoice!}
-              houseName={houseChoice === "create" ? houseName : "Maple House"}
-              username={username}
-              avatarColor={avatarColor}
-            />
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+              className="flex-1 flex flex-col"
+            >
+              {currentStep === "welcome" && <WelcomeStep onContinue={next} />}
+              {currentStep === "profile" && (
+                <ProfileStep username={username} setUsername={setUsername} avatarColor={avatarColor} setAvatarColor={setAvatarColor} />
+              )}
+              {currentStep === "houseChoice" && <HouseChoiceStep choice={houseChoice} setChoice={setHouseChoice} />}
+              {currentStep === "createHouse" && (
+                <CreateHouseStep houseName={houseName} setHouseName={setHouseName} roommateCount={roommateCount} setRoommateCount={setRoommateCount} generatedCode={generatedCode} codeCopied={codeCopied} onCopyCode={copyCode} />
+              )}
+              {currentStep === "joinHouse" && <JoinHouseStep inviteCode={inviteCode} setInviteCode={setInviteCode} />}
+              {currentStep === "success" && (
+                <SuccessStep houseChoice={houseChoice!} houseName={houseChoice === "create" ? houseName : "Maple House"} username={username} avatarColor={avatarColor} />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Bottom button (hidden on welcome) */}
