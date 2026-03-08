@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { User, Mail, Bell, BellOff, Moon, Home, Share2, LogOut, HelpCircle, Info, Trash2, ChevronRight, Palette } from "lucide-react";
+import { User, Mail, Bell, Moon, Home, Share2, LogOut, HelpCircle, Info, Trash2, ChevronRight, Palette } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import { cn } from "@/lib/utils";
 
 const Settings = () => {
   const [reminders, setReminders] = useState(true);
-  const [reminderSound, setReminderSound] = useState(true);
-  const [quietHours, setQuietHours] = useState(false);
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -34,9 +32,7 @@ const Settings = () => {
         {/* Notifications */}
         <Section title="Notifications">
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
-            <ToggleRow icon={<Bell className="w-4 h-4" />} label="Reminders" value={reminders} onChange={setReminders} />
-            <ToggleRow icon={<BellOff className="w-4 h-4" />} label="Reminder sound" value={reminderSound} onChange={setReminderSound} border />
-            <ToggleRow icon={<Moon className="w-4 h-4" />} label="Quiet hours" value={quietHours} onChange={setQuietHours} last />
+            <ToggleRow icon={<Bell className="w-4 h-4" />} label="Reminders" value={reminders} onChange={setReminders} last />
           </div>
         </Section>
 
