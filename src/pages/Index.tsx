@@ -53,7 +53,10 @@ const Index = () => {
               </span>
             </div>
           </div>
-          <button className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-md hover:scale-105 transition-transform">
+          <button
+            onClick={() => navigate("/create")}
+            className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-md hover:scale-105 transition-transform"
+          >
             <Plus className="w-5 h-5 text-primary-foreground" />
           </button>
         </div>
