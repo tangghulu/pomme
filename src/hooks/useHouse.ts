@@ -106,14 +106,34 @@ export function useChoreAssignments() {
     queryKey: ["chore_assignments", house?.id],
     enabled: !!house,
     queryFn: async () => {
+      // Get chore IDs for this house
+      const { data: houseChores } = await supabase
+        .from("chores")
+        .select("id")
+        .eq("house_id", house!.id);
+      const choreIds = houseChores?.map((c: any) => c.id) || [];
+      if (!choreIds.length) return [];
+
       const { data, error } = await supabase
         .from("chore_assignments")
-        .select("*, chores(*), profiles(*)")
-        .in("chore_id", 
-          (await supabase.from("chores").select("id").eq("house_id", house!.id)).data?.map((c: any) => c.id) || []
-        );
+        .select("*, chores(*)")
+        .in("chore_id", choreIds);
       if (error) throw error;
-      return data || [];
+
+      // Fetch profiles for all assigned user IDs
+      const userIds = [...new Set((data || []).map((a: any) => a.user_id))];
+      const { data: profiles } = userIds.length
+        ? await supabase.from("profiles").select("*").in("id", userIds)
+        : { data: [] };
+
+      const profileMap = Object.fromEntries(
+        (profiles || []).map((p: any) => [p.id, p])
+      );
+
+      return (data || []).map((a: any) => ({
+        ...a,
+        profile: profileMap[a.user_id] || null,
+      }));
     },
   });
 }

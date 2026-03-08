@@ -37,7 +37,7 @@ const Index = () => {
 
   const choreItems = weekAssignments.map((a: any) => {
     const chore = a.chores || chores.find((c: any) => c.id === a.chore_id);
-    const profile = a.profiles || members.find((m: any) => m.user_id === a.user_id)?.profiles;
+    const profile = a.profile || members.find((m: any) => m.user_id === a.user_id)?.profiles;
     return {
       id: a.id,
       name: chore?.name || "Chore",
