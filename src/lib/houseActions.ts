@@ -1,56 +1,20 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export async function createHouse(name: string, userId: string) {
-  // Create house
-  const { data: house, error: houseErr } = await supabase
-    .from("houses")
-    .insert({ name, created_by: userId })
-    .select()
-    .single();
-  if (houseErr) throw houseErr;
-
-  // Add creator as member
-  await supabase.from("house_members").insert({
-    house_id: house.id,
-    user_id: userId,
-    role: "admin",
-  });
-
-  // Generate invite code
-  const { data: codeResult } = await supabase.rpc("generate_invite_code");
-  const code = codeResult || `${Math.random().toString(36).slice(2, 6).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
-  
-  await supabase.from("invite_codes").insert({
-    house_id: house.id,
-    code,
-    created_by: userId,
-  });
-
-  return { house, code };
+export async function createHouse(name: string, _userId: string) {
+  const { data, error } = await supabase.rpc("create_house_with_admin", { _name: name });
+  if (error) throw error;
+  const result = data as unknown as { house_id: string; code: string };
+  return { house: { id: result.house_id, name }, code: result.code };
 }
 
-export async function joinHouseByCode(code: string, userId: string) {
-  const { data: invite, error } = await supabase
-    .from("invite_codes")
-    .select("*")
-    .eq("code", code.trim().toUpperCase())
-    .eq("is_active", true)
-    .maybeSingle();
-
-  if (error) throw error;
-  if (!invite) throw new Error("Invalid or expired invite code");
-
-  const { error: joinErr } = await supabase.from("house_members").insert({
-    house_id: invite.house_id,
-    user_id: userId,
-  });
-
-  if (joinErr) {
-    if (joinErr.code === "23505") throw new Error("You're already a member of this house");
-    throw joinErr;
+export async function joinHouseByCode(code: string, _userId: string) {
+  const { data, error } = await supabase.rpc("join_house_by_code", { _code: code });
+  if (error) {
+    if (error.message.includes("already a member")) throw new Error("You're already a member of this house");
+    if (error.message.includes("Invalid")) throw new Error("Invalid or expired invite code");
+    throw error;
   }
-
-  return invite.house_id;
+  return data as string;
 }
 
 export async function createChore(params: {
