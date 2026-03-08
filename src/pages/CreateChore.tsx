@@ -284,22 +284,7 @@ function StepFrequencyAndTime({
         <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5" /> Reminder time
         </label>
-        <div className="flex flex-wrap gap-2">
-          {timeSlots.map((t) => (
-            <button
-              key={t}
-              onClick={() => setReminderTime(t)}
-              className={cn(
-                "px-3.5 py-2 rounded-xl text-xs font-bold transition-all duration-200",
-                reminderTime === t
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-muted/60 text-muted-foreground hover:bg-accent"
-              )}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+        <ScrollTimePicker value={reminderTime} onChange={setReminderTime} />
       </div>
     </div>
   );
