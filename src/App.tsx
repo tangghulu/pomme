@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import CreateChore from "./pages/CreateChore";
 import Chores from "./pages/Chores";
 import Roomies from "./pages/Roomies";
+import Settings from "./pages/Settings";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
