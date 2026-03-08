@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Plus, Flame, ChevronLeft, ChevronRight } from "lucide-react";
 import ChoreCard, { type ChoreStatus } from "@/components/ChoreCard";
 import BottomNav from "@/components/BottomNav";
