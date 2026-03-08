@@ -1,73 +1,65 @@
-# Welcome to your Lovable project
+# Pomme
 
-## Project info
+Pomme is a mobile-first roommate chore app designed to make shared living easier. It helps households manage recurring chores with clear weekly views, fair rotation, simple reminders, and low-stress accountability.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## About
 
-## How can I edit this code?
+Chores in shared homes often become unclear, forgotten, or unevenly distributed. Pomme was designed to reduce that friction by giving roommates a calm, structured way to organize recurring tasks like garbage, kitchen cleaning, bathroom cleaning, and vacuuming.
 
-There are several ways of editing your application.
+The app focuses on:
+- visibility
+- fairness
+- simplicity
+- low-conflict coordination
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- Weekly chore dashboard
+- Done, Upcoming, and Overdue task states
+- Recurring chore setup
+- Fair auto-rotation between roommates
+- Create or join a shared house
+- Roommate management
+- Reminder settings
+- Simple streak tracking
+- Low-conflict, non-competitive design
 
-Changes made via Lovable will be committed automatically to this repo.
+## Core Screens
 
-**Use your preferred IDE**
+- **Home** — weekly chore board and quick task completion
+- **Chores** — create, edit, and manage recurring chores
+- **Roomies** — house members and invite flow
+- **Settings** — account, notifications, and house preferences
+- **Onboarding** — create profile, create or join house
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Design Direction
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Pomme is designed to feel soft, playful, and organized. The interface takes inspiration from calm productivity apps and uses:
+- rounded cards
+- generous whitespace
+- mobile-first layouts
+- a green-apple inspired palette with creamy neutrals, sage greens, muted oat tones, and warm browns
 
-Follow these steps:
+## Product Goals
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Make recurring chores easier to manage
+- Reduce mental load in shared households
+- Create fairer chore distribution
+- Avoid competitive or guilt-heavy mechanics
+- Keep the experience clear and welcoming
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Target Users
 
-# Step 3: Install the necessary dependencies.
-npm i
+Pomme is built for:
+- roommates in apartments or shared houses
+- students living together
+- young adults managing shared spaces
+- households that want structure without extra tension
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Status
 
-**Edit a file directly in GitHub**
+Currently in design and prototyping.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Short Description
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+A soft, shared chore app for roommates to organize recurring tasks, rotate responsibilities, and keep the house running smoothly.
