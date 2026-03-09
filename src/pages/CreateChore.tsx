@@ -162,7 +162,7 @@ function StepNameAndDays({ choreName, setChoreName, choreIcon, setChoreIcon, sel
   );
 }
 
-function StepFrequencyAndTime({ frequency, setFrequency, reminderTime, setReminderTime }: { frequency: string; setFrequency: (v: string) => void; reminderTime: string; setReminderTime: (v: string) => void }) {
+function StepFrequencyAndTime({ frequency, setFrequency }: { frequency: string; setFrequency: (v: string) => void }) {
   return (
     <div className="space-y-6">
       <div>
@@ -176,10 +176,6 @@ function StepFrequencyAndTime({ frequency, setFrequency, reminderTime, setRemind
             </button>
           ))}
         </div>
-      </div>
-      <div>
-        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Reminder time</label>
-        <ScrollTimePicker value={reminderTime} onChange={setReminderTime} />
       </div>
     </div>
   );
