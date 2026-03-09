@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import ScrollTimePicker from "@/components/ScrollTimePicker";
-import { ArrowLeft, ArrowRight, Check, Clock, Users, RefreshCw, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Users, RefreshCw, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { useHouse } from "@/hooks/useHouse";
@@ -46,7 +45,6 @@ const CreateChore = () => {
   const [choreIcon, setChoreIcon] = useState("📋");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [frequency, setFrequency] = useState("weekly");
-  const [reminderTime, setReminderTime] = useState("9:00 AM");
   const [peopleNeeded, setPeopleNeeded] = useState(1);
   const [autoRotate, setAutoRotate] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -74,7 +72,6 @@ const CreateChore = () => {
         icon: choreIcon,
         frequency,
         days: selectedDays,
-        reminder_time: reminderTime,
         people_needed: peopleNeeded,
         auto_rotate: autoRotate,
         created_by: user.id,
@@ -89,7 +86,7 @@ const CreateChore = () => {
   };
 
   const stepTitles = ["What's the chore?", "When & how often?", "Who & how?", "Looking good! 🎉"];
-  const stepSubtitles = ["Give it a name and pick the days", "Set the frequency and reminder", "Decide how many people and rotation", "Here's a summary of your new chore"];
+  const stepSubtitles = ["Give it a name and pick the days", "Set the frequency", "Decide how many people and rotation", "Here's a summary of your new chore"];
 
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="min-h-screen bg-background flex flex-col">
@@ -115,9 +112,9 @@ const CreateChore = () => {
           <AnimatePresence mode="wait">
             <motion.div key={step} variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
               {step === 0 && <StepNameAndDays choreName={choreName} setChoreName={setChoreName} choreIcon={choreIcon} setChoreIcon={setChoreIcon} selectedDays={selectedDays} toggleDay={toggleDay} />}
-              {step === 1 && <StepFrequencyAndTime frequency={frequency} setFrequency={setFrequency} reminderTime={reminderTime} setReminderTime={setReminderTime} />}
+              {step === 1 && <StepFrequencyAndTime frequency={frequency} setFrequency={setFrequency} />}
               {step === 2 && <StepPeopleAndRotation peopleNeeded={peopleNeeded} setPeopleNeeded={setPeopleNeeded} autoRotate={autoRotate} setAutoRotate={setAutoRotate} />}
-              {step === 3 && <StepReview choreName={choreName} choreIcon={choreIcon} selectedDays={selectedDays} frequency={frequency} reminderTime={reminderTime} peopleNeeded={peopleNeeded} autoRotate={autoRotate} />}
+              {step === 3 && <StepReview choreName={choreName} choreIcon={choreIcon} selectedDays={selectedDays} frequency={frequency} peopleNeeded={peopleNeeded} autoRotate={autoRotate} />}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -170,7 +167,7 @@ function StepNameAndDays({ choreName, setChoreName, choreIcon, setChoreIcon, sel
   );
 }
 
-function StepFrequencyAndTime({ frequency, setFrequency, reminderTime, setReminderTime }: { frequency: string; setFrequency: (v: string) => void; reminderTime: string; setReminderTime: (v: string) => void }) {
+function StepFrequencyAndTime({ frequency, setFrequency }: { frequency: string; setFrequency: (v: string) => void }) {
   return (
     <div className="space-y-6">
       <div>
@@ -184,10 +181,6 @@ function StepFrequencyAndTime({ frequency, setFrequency, reminderTime, setRemind
             </button>
           ))}
         </div>
-      </div>
-      <div>
-        <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Reminder time</label>
-        <ScrollTimePicker value={reminderTime} onChange={setReminderTime} />
       </div>
     </div>
   );
@@ -223,13 +216,12 @@ function StepPeopleAndRotation({ peopleNeeded, setPeopleNeeded, autoRotate, setA
   );
 }
 
-function StepReview({ choreName, choreIcon, selectedDays, frequency, reminderTime, peopleNeeded, autoRotate }: { choreName: string; choreIcon: string; selectedDays: string[]; frequency: string; reminderTime: string; peopleNeeded: number; autoRotate: boolean }) {
+function StepReview({ choreName, choreIcon, selectedDays, frequency, peopleNeeded, autoRotate }: { choreName: string; choreIcon: string; selectedDays: string[]; frequency: string; peopleNeeded: number; autoRotate: boolean }) {
   const freqLabel = frequencies.find((f) => f.value === frequency)?.label || frequency;
   const rows = [
     { label: "Chore", value: `${choreIcon} ${choreName}`, icon: "✏️" },
     { label: "Days", value: selectedDays.join(", "), icon: "📆" },
     { label: "Frequency", value: freqLabel, icon: "🔁" },
-    { label: "Reminder", value: reminderTime, icon: "⏰" },
     { label: "People", value: `${peopleNeeded} roommate${peopleNeeded > 1 ? "s" : ""}`, icon: "👥" },
     { label: "Auto-rotate", value: autoRotate ? "On" : "Off", icon: "🔄" },
   ];
