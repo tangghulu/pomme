@@ -46,9 +46,7 @@ const CreateChore = () => {
   const [choreIcon, setChoreIcon] = useState("📋");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [frequency, setFrequency] = useState("weekly");
-  
-  const [peopleNeeded, setPeopleNeeded] = useState(1);
-  const [autoRotate, setAutoRotate] = useState(true);
+  nst [autoRotate, setAutoRotate] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const toggleDay = (day: string) => {
@@ -75,8 +73,7 @@ const CreateChore = () => {
         frequency,
         days: selectedDays,
         reminder_time: reminderTime,
-        people_needed: peopleNeeded,
-        auto_rotate: autoRotate,
+        people_needed: peopleNeutoRotate,
         created_by: user.id,
       });
       queryClient.invalidateQueries({ queryKey: ["chores"] });
