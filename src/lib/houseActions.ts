@@ -23,7 +23,6 @@ export async function createChore(params: {
   icon: string;
   frequency: string;
   days: string[];
-  reminder_time: string;
   people_needed: number;
   auto_rotate: boolean;
   created_by: string;
