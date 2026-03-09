@@ -83,7 +83,7 @@ const CreateChore = () => {
   };
 
   const stepTitles = ["What's the chore?", "When & how often?", "Who & how?", "Looking good! 🎉"];
-  const stepSubtitles = ["Give it a name and pick the days", "Set the frequency and reminder", "Decide how many people and rotation", "Here's a summary of your new chore"];
+  const stepSubtitles = ["Give it a name and pick the days", "Set the frequency", "Decide how many people and rotation", "Here's a summary of your new chore"];
 
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="min-h-screen bg-background flex flex-col">
