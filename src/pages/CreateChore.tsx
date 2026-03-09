@@ -211,13 +211,12 @@ function StepPeopleAndRotation({ peopleNeeded, setPeopleNeeded, autoRotate, setA
   );
 }
 
-function StepReview({ choreName, choreIcon, selectedDays, frequency, reminderTime, peopleNeeded, autoRotate }: { choreName: string; choreIcon: string; selectedDays: string[]; frequency: string; reminderTime: string; peopleNeeded: number; autoRotate: boolean }) {
+function StepReview({ choreName, choreIcon, selectedDays, frequency, peopleNeeded, autoRotate }: { choreName: string; choreIcon: string; selectedDays: string[]; frequency: string; peopleNeeded: number; autoRotate: boolean }) {
   const freqLabel = frequencies.find((f) => f.value === frequency)?.label || frequency;
   const rows = [
     { label: "Chore", value: `${choreIcon} ${choreName}`, icon: "✏️" },
     { label: "Days", value: selectedDays.join(", "), icon: "📆" },
     { label: "Frequency", value: freqLabel, icon: "🔁" },
-    { label: "Reminder", value: reminderTime, icon: "⏰" },
     { label: "People", value: `${peopleNeeded} roommate${peopleNeeded > 1 ? "s" : ""}`, icon: "👥" },
     { label: "Auto-rotate", value: autoRotate ? "On" : "Off", icon: "🔄" },
   ];
