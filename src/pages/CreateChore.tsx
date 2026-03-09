@@ -108,12 +108,13 @@ const CreateChore = () => {
           <AnimatePresence mode="wait">
             <motion.div key={step} variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
               {step === 0 && <StepNameAndDays choreName={choreName} setChoreName={setChoreName} choreIcon={choreIcon} setChoreIcon={setChoreIcon} selectedDays={selectedDays} toggleDay={toggleDay} />}
-              {step === 1 && <StepFrequencyAndTime frequency={frequency} setFrequency={setFrequency} reminderTime={reminderTime} setReminderTime={setReminderTime} />}
-              {step ==eopleNeeded={setPeopleNeeded} autoRotate={autoRotate} setAutoRotate={setAutoRotate} />}
- choreIcon={choreIcon} selectedDays={selectedDays} frequency={frequency} reminderTime={reminderTime} peopleNeeded={peopleNeeded} autoRotate={autoRotate} />}
+              {step === 1 && <StepFrequencyAndTime frequency={frequency} setFrequency={setFrequency} />}
+              {step === 2 && <StepPeopleAndRotation peopleNeeded={peopleNeeded} setPeopleNeeded={setPeopleNeeded} autoRotate={autoRotate} setAutoRotate={setAutoRotate} />}
+              {step === 3 && <StepReview choreName={choreName} choreIcon={choreIcon} selectedDays={selectedDays} frequency={frequency} peopleNeeded={peopleNeeded} autoRotate={autoRotate} />}
             </motion.div>
           </AnimatePresence>
-        </d"mt-6">
+        </div>
+        <div className="mt-6">
           {step < TOTAL_STEPS - 1 ? (
             <button onClick={next} disabled={!canAdvance()} className={cn("w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition-all duration-200", canAdvance() ? "bg-primary text-primary-foreground shadow-md hover:scale-[1.02] active:scale-[0.98]" : "bg-muted text-muted-foreground cursor-not-allowed")}>
               Continue <ArrowRight className="w-4 h-4" />
