@@ -46,8 +46,7 @@ const CreateChore = () => {
   const [choreIcon, setChoreIcon] = useState("📋");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [frequency, setFrequency] = useState("weekly");
-  nst [autoRotate, setAutoRotate] = useState(true);
-  const [loading, setLoading] = useState(false);
+  oading, setLoading] = useState(false);
 
   const toggleDay = (day: string) => {
     setSelectedDays((prev) => prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]);
@@ -76,7 +75,7 @@ const CreateChore = () => {
         people_needed: peopleNeutoRotate,
         created_by: user.id,
       });
-      queryClient.invalidateQueries({ queryKey: ["chores"] });
+      querqueryKey: ["chores"] });
       toast({ title: "Chore created!", description: `${choreName} has been added.` });
       navigate("/");
     } catch (e: any) {
@@ -113,7 +112,7 @@ const CreateChore = () => {
             <motion.div key={step} variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
               {step === 0 && <StepNameAndDays choreName={choreName} setChoreName={setChoreName} choreIcon={choreIcon} setChoreIcon={setChoreIcon} selectedDays={selectedDays} toggleDay={toggleDay} />}
               {step === 1 && <StepFrequencyAndTime frequency={frequency} setFrequency={setFrequency} reminderTime={reminderTime} setReminderTime={setReminderTime} />}
-              {step === 2 && <StepPeopleAndRotation peopleNeeded={peopleNeeded} setPeopleNeeded={setPeopleNeeded} autoRotate={autoRotate} setAutoRotate={setAutoRotate} />}
+              {step ==eopleNeeded={setPeopleNeeded} autoRotate={autoRotate} setAutoRotate={setAutoRotate} />}
               {step === 3 && <StepReview choreName={choreName} choreIcon={choreIcon} selectedDays={selectedDays} frequency={frequency} reminderTime={reminderTime} peopleNeeded={peopleNeeded} autoRotate={autoRotate} />}
             </motion.div>
           </AnimatePresence>
