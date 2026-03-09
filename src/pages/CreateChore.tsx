@@ -68,12 +68,12 @@ const CreateChore = () => {
         icon: choreIcon,
         frequency,
         days: selectedDays,
-        reminder_time: reminderTime,
-        people_needed: peopleNeutoRotate,
+        people_needed: peopleNeeded,
+        auto_rotate: autoRotate,
         created_by: user.id,
       });
-      querqueryKey: ["chores"] });
-      toast({ title: "Chore createde} has been added.` });
+      queryClient.invalidateQueries({ queryKey: ["chores"] });
+      toast({ title: "Chore created!", description: `${choreName} has been added.` });
       navigate("/");
     } catch (e: any) {
       toast({ title: "Error", description: e.message || "Could not create chore", variant: "destructive" });
