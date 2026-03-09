@@ -12,6 +12,7 @@ import Roomies from "./pages/Roomies";
 import Settings from "./pages/Settings";
 import Onboarding from "./pages/Onboarding";
 import Auth from "./pages/Auth";
+import Welcome from "./pages/Welcome";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
