@@ -45,7 +45,11 @@ const CreateChore = () => {
   const [choreIcon, setChoreIcon] = useState("📋");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [frequency, setFrequency] = useState("weekly");
-  (day: string) => {
+  const [peopleNeeded, setPeopleNeeded] = useState(1);
+  const [autoRotate, setAutoRotate] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const toggleDay = (day: string) => {
     setSelectedDays((prev) => prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]);
   };
 
@@ -114,6 +118,7 @@ const CreateChore = () => {
             </motion.div>
           </AnimatePresence>
         </div>
+
         <div className="mt-6">
           {step < TOTAL_STEPS - 1 ? (
             <button onClick={next} disabled={!canAdvance()} className={cn("w-full py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition-all duration-200", canAdvance() ? "bg-primary text-primary-foreground shadow-md hover:scale-[1.02] active:scale-[0.98]" : "bg-muted text-muted-foreground cursor-not-allowed")}>
