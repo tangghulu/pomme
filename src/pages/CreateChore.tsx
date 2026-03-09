@@ -46,7 +46,7 @@ const CreateChore = () => {
   const [choreIcon, setChoreIcon] = useState("📋");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [frequency, setFrequency] = useState("weekly");
-  const [reminderTime, setReminderTime] = useState("9:00 AM");
+  
   const [peopleNeeded, setPeopleNeeded] = useState(1);
   const [autoRotate, setAutoRotate] = useState(true);
   const [loading, setLoading] = useState(false);
