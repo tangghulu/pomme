@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import ScrollTimePicker from "@/components/ScrollTimePicker";
-import { ArrowLeft, ArrowRight, Check, Clock, Users, RefreshCw, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Users, RefreshCw, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { useHouse } from "@/hooks/useHouse";
